@@ -92,9 +92,11 @@ header{
 }
 /* table================ */
 #data-table{
+    display: block;
     width: 100%;
     border-spacing: 0 0.5rem;
     color: #969cb8;
+    overflow-x: auto;
 }
 table thead tr th:first-child,
 table tbody tr td:first-child{
@@ -106,7 +108,6 @@ table tbody tr td:last-child{
 }
 table thead th{
     background: #ffffff;
-    color: #969cb3;
     font-weight: 400;
     text-align: left;
     padding: 1rem 2rem;
