@@ -57,15 +57,14 @@ const Transaction = {
 }
 
 const DOM = {
-
     transactionsContainer: document.querySelector('#data-table tbody'),
+
     addTransaction(Transaction, index) {
         const tr = document.createElement('tr')
         tr.innerHTML = DOM.innerHTMLTransaction(transaction)
 
         DOM.transactionsContainer.appendChild(tr)
     },
-
     innerHTMLTransaction(transaction) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
