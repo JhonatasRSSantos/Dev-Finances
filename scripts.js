@@ -3,14 +3,14 @@ const Modal = {
         document
             .querySelector('.modal-overlay')
             .classList
-            .add('active')
+            .add('active');
     },
 
     close() {                                                                                                                                                                                                                               
         document
             .querySelector('.modal-overlay')
             .classList
-            .remove('active')
+            .remove('active');
     }
 }
 
@@ -46,13 +46,31 @@ const transactions = [
 
 const Transaction = {
     incomes() {
-        // + input
+        let income = 0;
+        // pegar todas as transacoes, para cada transacao,
+        transactions.forEach((transaction) => {
+            // se for maior que zero
+            if (transaction.amount > 0 ) {
+                // somar a uma variavel e retornar a variavel
+                income += transaction.amount;
+            }
+        });
+        return income;
     },
     expenses() { 
-        // + exit
+        let expense = 0;
+        // pegar todas as transacoes, para cada transacao
+        transactions.forEach((transaction) => {
+            // se ela for menor que zero
+            if (transaction.amount < 0 ) {
+                // somar a uma variavel e retornar a variavel
+                expense += transaction.amount;
+            }
+        });
+        return expense;
     },
     total() {
-        // inputs - exits
+        return Transaction.incomes() + Transaction.expenses();
     }
 }
 
@@ -60,16 +78,16 @@ const DOM = {
     transactionsContainer: document.querySelector('#data-table tbody'),
 
     addTransaction(Transaction, index) {
-        const tr = document.createElement('tr')
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+        const tr = document.createElement('tr');
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction);
 
-        DOM.transactionsContainer.appendChild(tr)
+        DOM.transactionsContainer.appendChild(tr);
     },
     
     innerHTMLTransaction(transaction) {
-        const CSSclass = transaction.amount > 0 ? "income" : "expense"
+        const CSSclass = transaction.amount > 0 ? "income" : "expense";
 
-        const amount = Utils.formatCurrency(transaction.amount)
+        const amount = Utils.formatCurrency(transaction.amount);
 
         const html = `
         <td class="description">${transaction.description}</td>
@@ -80,32 +98,42 @@ const DOM = {
         </td>
         `
 
-        return html
+        return html;
 
     },
 
-    updateBalance(){
-        
+    updateBalance() {
+        document
+            .getElementById('incomeDisplay')
+            .innerHTML = Utils.formatCurrency(Transaction.incomes());
+        document
+            .getElementById('expenseDisplay')
+            .innerHTML = Utils.formatCurrency(Transaction.expenses());
+        document
+            .getElementById('totalDisplay')
+            .innerHTML = utils.formatCurrency(Transaction.total());
     }
 }
 
 const Utils = {
     formatCurrency(value) {
-        const signal = Number(value) < 0 ? "-" : ""
+        const signal = Number(value) < 0 ? "-" : "";
 
-        value = String(value).replace(/\D/g,"")
+        value = String(value).replace(/\D/g,"");
 
-        Number(value) / 100
+        value = Number(value) / 100;
 
-        value = value.toLocaleString("pt-BR," {
+        value = value.toLocaleString("pt-BR,"  {
             style: "currency",
             currency: "BRL"
-        })
-        return signal + value
+        });
+        return signal + value;
     }
 }
 
 transaction.forEach(function(transaction) {
-        DOM.addTransaction(transaction)
+        DOM.addTransaction(transaction);
 
-})
+});
+
+DOM.updateBalance();
