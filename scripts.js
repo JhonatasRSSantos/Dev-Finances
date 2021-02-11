@@ -16,28 +16,24 @@ const Modal = {
 
 const transactions = [
     {
-        id: 1,
         description: 'Energia',
         amount: -50000,
         date:'23/01/2021',
     },
 
     {
-        id: 2,
         description: 'Criação Website',
         amount: 500000,
         date:'23/01/2021',
     },
 
     {
-        id: 3,
         description: 'Internet',
         amount: -20000,
         date:'23/01/2021',
     },
 
     {
-        id: 4,
         description: 'App vendido',
         amount: -200000,
         date:'28/01/2021',
@@ -45,30 +41,43 @@ const transactions = [
 ]
 
 const Transaction = {
+    all: transactions,
+
+    add(transaction) {
+        Transaction.all.push(transaction)
+        App.reload()
+    },
+
+    remove(index) {
+
+    },
+
     incomes() {
         let income = 0;
         // pegar todas as transacoes, para cada transacao,
-        transactions.forEach((transaction) => {
+        transactions.all.forEach((transaction => {
             // se for maior que zero
             if (transaction.amount > 0 ) {
                 // somar a uma variavel e retornar a variavel
                 income += transaction.amount;
             }
-        });
+        })
         return income;
     },
+
     expenses() { 
         let expense = 0;
         // pegar todas as transacoes, para cada transacao
-        transactions.forEach((transaction) => {
+        transactions.all.forEach((transaction => {
             // se ela for menor que zero
             if (transaction.amount < 0 ) {
                 // somar a uma variavel e retornar a variavel
                 expense += transaction.amount;
             }
-        });
+        })
         return expense;
     },
+
     total() {
         return Transaction.incomes() + Transaction.expenses();
     }
@@ -112,6 +121,10 @@ const DOM = {
         document
             .getElementById('totalDisplay')
             .innerHTML = utils.formatCurrency(Transaction.total());
+    },
+
+    clearTransactions() {
+        DOM.transactionsContainer.innerHTML = ""
     }
 }
 
@@ -130,10 +143,27 @@ const Utils = {
         return signal + value;
     }
 }
+const App = {
+    init() {
 
-transaction.forEach(function(transaction) {
-        DOM.addTransaction(transaction);
+        Transaction.all.forEach(function(transaction => {
+            DOM.addTransaction(transaction)
+        })
 
-});
+        DOM.updateBalance();
+    },
 
-DOM.updateBalance();
+    reload() {
+        DOM.clearTransactions()
+        App.init()
+    },
+}
+
+App.init();
+
+
+// transaction.add({
+//     description: "hello",
+//     amount: 200,
+//     date: '23/01/2021'
+// })
