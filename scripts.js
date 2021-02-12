@@ -14,42 +14,44 @@ const Modal = {
     }
 }
 
-const transactions = [
-    {
-        description: 'Energia',
-        amount: -50000,
-        date:'23/01/2021',
-    },
-
-    {
-        description: 'Criação Website',
-        amount: 500000,
-        date:'23/01/2021',
-    },
-
-    {
-        description: 'Internet',
-        amount: -20000,
-        date:'23/01/2021',
-    },
-
-    {
-        description: 'App vendido',
-        amount: -200000,
-        date:'28/01/2021',
-    },
-]
-
 const Transaction = {
-    all: transactions,
+    all: [
+        {
+            description: 'Energia',
+            amount: -50000,
+            date:'23/01/2021',
+        },
+    
+        {
+            description: 'Criação Website',
+            amount: 500000,
+            date:'23/01/2021',
+        },
+    
+        {
+            description: 'Internet',
+            amount: -20000,
+            date:'23/01/2021',
+        },
+    
+        {
+            description: 'App vendido',
+            amount: -200000,
+            date:'28/01/2021',
+        },
+    ]
+    
 
     add(transaction) {
         Transaction.all.push(transaction)
+
         App.reload()
     },
 
     remove(index) {
+        Transaction.all.splice(index, 1)
 
+        App.reload()
     },
 
     incomes() {
@@ -87,16 +89,18 @@ const DOM = {
     transactionsContainer: document.querySelector('#data-table tbody'),
 
     addTransaction(Transaction, index) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction);
+        const tr = document.createElement('tr')
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
 
-        DOM.transactionsContainer.appendChild(tr);
+        DOM.transactionsContainer.appendChild(tr)
     },
+
+    (method) innerHTMLTransaction(transaction: any): string
     
     innerHTMLTransaction(transaction) {
-        const CSSclass = transaction.amount > 0 ? "income" : "expense";
+        const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
-        const amount = Utils.formatCurrency(transaction.amount);
+        const amount = Utils.formatCurrency(transaction.amount)
 
         const html = `
         <td class="description">${transaction.description}</td>
@@ -143,10 +147,36 @@ const Utils = {
         return signal + value;
     }
 }
+
+const Form = {
+    description: document.querySelector('inputdescription'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+    formatData(){
+
+    },
+
+    validadeField(){
+
+    },
+
+    submit(event) {
+        event.preventDefault();
+
+        //vewrificar se todas as informacoes foram preenchidas, 
+        Form.validadeFields();
+        //formatar os dados para ser salvo 
+        //salvar 
+        // apagar dados do formulario
+        // modal deve fechar
+        // atualizar formulario
+    }
+}
+
 const App = {
     init() {
 
-        Transaction.all.forEach(function(transaction => {
+        Transaction.all.forEach(transaction => {
             DOM.addTransaction(transaction)
         })
 
@@ -159,7 +189,9 @@ const App = {
     },
 }
 
-App.init();
+App.init()
+
+
 
 
 // transaction.add({
