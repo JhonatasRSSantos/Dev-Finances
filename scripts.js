@@ -152,12 +152,24 @@ const Form = {
     description: document.querySelector('inputdescription'),
     amount: document.querySelector('input#amount'),
     date: document.querySelector('input#date'),
-    formatData(){
 
+    getValues() { 
+        return{
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
     },
 
-    validadeField(){
-
+    validadeFields() {
+        const { description, amount, date } = Form.getValues()
+        
+        if(
+            description.trim() === "" ||
+            amount.trim() === "" ||
+            date.trim() === "" ) {
+                throw new Error("Por favor, preencha todos os campos")
+        }
     },
 
     submit(event) {
@@ -165,7 +177,8 @@ const Form = {
 
         //vewrificar se todas as informacoes foram preenchidas, 
         Form.validadeFields();
-        //formatar os dados para ser salvo 
+        //formatar os dados para ser salvo
+        // Form.formatData();
         //salvar 
         // apagar dados do formulario
         // modal deve fechar
