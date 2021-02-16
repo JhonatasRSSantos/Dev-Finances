@@ -133,6 +133,9 @@ const DOM = {
 }
 
 const Utils = {
+    formatAmount(value){
+
+    },
     formatCurrency(value) {
         const signal = Number(value) < 0 ? "-" : "";
 
@@ -140,10 +143,11 @@ const Utils = {
 
         value = Number(value) / 100;
 
-        value = value.toLocaleString("pt-BR,"  {
+        value = value.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL"
         });
+
         return signal + value;
     }
 }
@@ -172,17 +176,29 @@ const Form = {
         }
     },
 
+    formatValues() {
+        let { description, amount, date } = Form.getValues();
+
+        amount = Utils.formatAmount(amount);
+
+    },
+
     submit(event) {
         event.preventDefault();
 
+        try{
         //vewrificar se todas as informacoes foram preenchidas, 
-        Form.validadeFields();
+            Form.validadeFields();
         //formatar os dados para ser salvo
-        // Form.formatData();
+            Form.formatValues();
         //salvar 
         // apagar dados do formulario
         // modal deve fechar
         // atualizar formulario
+
+        } catch(error) {
+            alert(error.message);
+        }
     }
 }
 
