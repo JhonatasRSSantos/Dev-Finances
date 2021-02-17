@@ -1,2 +1,2 @@
 # Dev-Finances
- Criado na **MaratonaDiscover**, #Roctseat 
+ Criado na **MaratonaDiscover** | Rocketseat.
